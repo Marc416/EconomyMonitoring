@@ -1,0 +1,44 @@
+name: Deploy spring server to Private Server
+on: [push]
+
+jobs:
+  deploy:
+    environment: dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_ID }}
+          password: ${{ secrets.DOCKER_PW }}
+
+      - name: Build the Docker image and push to Docker Hub
+        run: |
+          cd ./batch_application
+          ./gradlew build -x test
+          docker buildx create --use
+          docker buildx build --push --platform linux/arm/v7,linux/amd64 -t juni416/monitoring-batch:0.0.1 .
+
+      - name: Install SSH client
+        run: sudo apt-get install openssh-client
+
+      - name: SSH to Server and Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            export SPRING_DATASOURCE_URL={{secrets.SPRING_DATASOURCE_URL}}/batch_database
+            export SPRING_DATASOURCE_PASSWORD={{secrets.SPRING_DATASOURCE_PASSWORD}}
+            export SPRING_DATASOURCE_USERNAME={{secrets.SPRING_DATASOURCE_USERNAME}}
+            
+            sudo docker pull juni416/monitoring-batch:0.0.1
+            sudo docker stop monitoring-batch
+            sudo docker container rm monitoring-batch
+            sudo docker run -d -p 18881:8081 --name monitoring-batch juni416/monitoring-batch:0.0.1
+
