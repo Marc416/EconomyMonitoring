@@ -15,12 +15,12 @@ jobs:
           username: ${{ secrets.DOCKER_ID }}
           password: ${{ secrets.DOCKER_PW }}
 
-#      - name: Build the Docker image and push to Docker Hub
-#        run: |
-#          cd ./economy_monitoring/batch_application
-#          ./gradlew build -x test
-#          docker buildx create --use
-#          docker buildx build --push --platform linux/arm/v7,linux/amd64 -t juni416/monitoring-batch:0.0.1 .
+      - name: Build the Docker image and push to Docker Hub
+        run: |
+          cd ./economy_monitoring/batch_application
+          ./gradlew build -x test
+          docker buildx create --use
+          docker buildx build --push --platform linux/arm/v7,linux/amd64 -t juni416/monitoring-batch:0.0.1 .
 
       - name: Install SSH client
         run: sudo apt-get install openssh-client
@@ -29,16 +29,16 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
-          username: joonhee
-          password: wnsgml2054@
-          port: 9999
-#          script: |
-#            export SPRING_DATASOURCE_URL={{secrets.SPRING_DATASOURCE_URL}}/batch_database
-#            export SPRING_DATASOURCE_PASSWORD={{secrets.SPRING_DATASOURCE_PASSWORD}}
-#            export SPRING_DATASOURCE_USERNAME={{secrets.SPRING_DATASOURCE_USERNAME}}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            export SPRING_DATASOURCE_URL={{secrets.SPRING_DATASOURCE_URL}}/batch_database
+            export SPRING_DATASOURCE_PASSWORD={{secrets.SPRING_DATASOURCE_PASSWORD}}
+            export SPRING_DATASOURCE_USERNAME={{secrets.SPRING_DATASOURCE_USERNAME}}
             
-#            sudo docker pull juni416/monitoring-batch:0.0.1
-#            sudo docker stop monitoring-batch
-#            sudo docker container rm monitoring-batch
-#            sudo docker run -d -p 18881:8081 --name monitoring-batch juni416/monitoring-batch:0.0.1
+            sudo docker pull juni416/monitoring-batch:0.0.1
+            sudo docker stop monitoring-batch
+            sudo docker container rm monitoring-batch
+            sudo docker run -d -p 18881:8081 --name monitoring-batch juni416/monitoring-batch:0.0.1
 
