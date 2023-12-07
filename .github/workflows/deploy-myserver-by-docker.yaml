@@ -21,7 +21,7 @@ jobs:
 #          ./gradlew build -x test
 #          docker buildx create --use
 #          docker buildx build --push --platform linux/arm/v7,linux/amd64 -t juni416/monitoring-batch:0.0.1 .
-#
+
       - name: Install SSH client
         run: sudo apt-get install openssh-client
 
@@ -32,10 +32,10 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
-          script: |
-            export SPRING_DATASOURCE_URL={{secrets.SPRING_DATASOURCE_URL}}/batch_database
-            export SPRING_DATASOURCE_PASSWORD={{secrets.SPRING_DATASOURCE_PASSWORD}}
-            export SPRING_DATASOURCE_USERNAME={{secrets.SPRING_DATASOURCE_USERNAME}}
+#          script: |
+#            export SPRING_DATASOURCE_URL={{secrets.SPRING_DATASOURCE_URL}}/batch_database
+#            export SPRING_DATASOURCE_PASSWORD={{secrets.SPRING_DATASOURCE_PASSWORD}}
+#            export SPRING_DATASOURCE_USERNAME={{secrets.SPRING_DATASOURCE_USERNAME}}
             
 #            sudo docker pull juni416/monitoring-batch:0.0.1
 #            sudo docker stop monitoring-batch
