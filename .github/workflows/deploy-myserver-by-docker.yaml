@@ -15,12 +15,12 @@ jobs:
           username: ${{ secrets.DOCKER_ID }}
           password: ${{ secrets.DOCKER_PW }}
 
-      - name: Build the Docker image and push to Docker Hub
-        run: |
-          cd ./economy_monitoring/batch_application
-          ./gradlew build -x test
-          docker buildx create --use
-          docker buildx build --push --platform linux/arm/v7,linux/amd64 -t juni416/monitoring-batch:0.0.1 .
+#      - name: Build the Docker image and push to Docker Hub
+#        run: |
+#          cd ./economy_monitoring/batch_application
+#          ./gradlew build -x test
+#          docker buildx create --use
+#          docker buildx build --push --platform linux/arm/v7,linux/amd64 -t juni416/monitoring-batch:0.0.1 .
 
       - name: Install SSH client
         run: sudo apt-get install openssh-client
