@@ -37,8 +37,8 @@ jobs:
             export SPRING_DATASOURCE_PASSWORD={{secrets.SPRING_DATASOURCE_PASSWORD}}
             export SPRING_DATASOURCE_USERNAME={{secrets.SPRING_DATASOURCE_USERNAME}}
             
-            sudo docker pull juni416/monitoring-batch:0.0.1
-            sudo docker stop monitoring-batch
-            sudo docker container rm monitoring-batch
-            sudo docker run -d -p 18881:8081 --name monitoring-batch juni416/monitoring-batch:0.0.1
+#            sudo docker pull juni416/monitoring-batch:0.0.1
+#            sudo docker stop monitoring-batch
+#            sudo docker container rm monitoring-batch
+#            sudo docker run -d -p 18881:8081 --name monitoring-batch juni416/monitoring-batch:0.0.1
 
