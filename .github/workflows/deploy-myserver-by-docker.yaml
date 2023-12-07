@@ -1,8 +1,8 @@
 name: Deploy spring server to Private Server
 on:
-    push:
-      branches:
-        - develop
+  push:
+    branches:
+      - develop
 
 jobs:
   deploy:
