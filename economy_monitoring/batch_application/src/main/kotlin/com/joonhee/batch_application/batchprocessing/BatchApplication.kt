@@ -10,6 +10,6 @@ class BatchApplication
 
 fun main(args: Array<String>) {
     val applicationContext = runApplication<BatchApplication>(*args)
-    val exitCode = SpringApplication.exit(applicationContext)
-    exitProcess(exitCode)
+//    val exitCode = SpringApplication.exit(applicationContext)
+//    exitProcess(exitCode)
 }
