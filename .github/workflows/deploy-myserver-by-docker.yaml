@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - develop
+      - feature/batch-scheduling
 
 jobs:
   deploy:
@@ -43,5 +44,9 @@ jobs:
             sudo docker pull juni416/monitoring-batch:0.0.1
             sudo docker stop monitoring-batch
             sudo docker container rm monitoring-batch
-            sudo docker run -d -p 18881:8081 --name monitoring-batch juni416/monitoring-batch:0.0.1
+            sudo docker run -e \
+            SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_DATASOURCE_PASSWORD}} \
+            SPRING_DATASOURCE_URL=${{secrets.SPRING_DATASOURCE_URL}} \
+            SPRING_DATASOURCE_USERNAME=${{secrets.SPRING_DATASOURCE_USERNAME}} \
+            -d -p 18881:8081 --name monitoring-batch juni416/monitoring-batch:0.0.1
 

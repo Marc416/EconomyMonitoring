@@ -1,4 +1,11 @@
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY . .
-ENTRYPOINT ["java","-jar","./build/libs/batch_application-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT [
+"java",
+"-jar",
+"-DSPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}",
+"-DSPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}",
+"-DSPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}",
+"./build/libs/batch_application-0.0.1-SNAPSHOT.jar"
+]
