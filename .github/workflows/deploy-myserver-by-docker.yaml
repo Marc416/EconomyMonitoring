@@ -37,13 +37,13 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            export SPRING_DATASOURCE_URL=${{secrets.SPRING_DATASOURCE_URL}}/batch_database
-            export SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_DATASOURCE_PASSWORD}}
-            export SPRING_DATASOURCE_USERNAME=${{secrets.SPRING_DATASOURCE_USERNAME}}
+#            export SPRING_DATASOURCE_URL=${{secrets.SPRING_DATASOURCE_URL}}/batch_database
+#            export SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_DATASOURCE_PASSWORD}}
+#            export SPRING_DATASOURCE_USERNAME=${{secrets.SPRING_DATASOURCE_USERNAME}}
             sudo docker pull juni416/monitoring-batch:0.0.1
             sudo docker stop monitoring-batch || true && sudo docker container rm monitoring-batch || true
-            sudo docker run -e \
-            -e SPRING_DATASOURCE_PASSWORD=$SPRING_DATASOURCE_PASSWORD \
-            -e SPRING_DATASOURCE_URL=$secrets.SPRING_DATASOURCE_URL \
-            -e SPRING_DATASOURCE_USERNAME=$secrets.SPRING_DATASOURCE_USERNAME \
+            sudo docker run \
+            -e SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_DATASOURCE_PASSWORD}} \
+            -e SPRING_DATASOURCE_URL=${{secrets.SPRING_DATASOURCE_URL}}/batch_database \
+            -e SPRING_DATASOURCE_USERNAME=${{secrets.SPRING_DATASOURCE_USERNAME}} \
             -d -p 18881:8081 --name monitoring-batch juni416/monitoring-batch:0.0.1
