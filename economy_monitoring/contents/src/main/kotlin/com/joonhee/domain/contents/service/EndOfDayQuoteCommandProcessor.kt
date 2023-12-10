@@ -4,7 +4,7 @@ import com.joonhee.domain.contents.repository.EndOfDayQuoteRepository
 import com.joonhee.domain.contents.usecase.EndOfDayQuote
 import com.joonhee.domain.contents.usecase.EndOfDayQuoteCommandUseCase
 
-class EndOfDayQuoteCommandProcessor(
+open class EndOfDayQuoteCommandProcessor(
     val endOfDayQuoteRepository: EndOfDayQuoteRepository
 ) : EndOfDayQuoteCommandUseCase {
     override fun saveEndOfDayQuote(endOfDayQuotes: List<EndOfDayQuote>) {
