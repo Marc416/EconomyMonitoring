@@ -7,6 +7,8 @@ class FindTopCompanySymbolQueryProcessor(
     private val nasdaqPort: NasdaqPort
 ): FindTopCompanySymbolQueryUseCase {
     override fun findTopCompanySymbol(): List<String> {
-        return nasdaqPort.findTopCompanySymbol()
+        val nasdaqSymbols = nasdaqPort.findTopNasdaqCompanySymbol()
+        val nyseSymbols = nasdaqPort.findTopNyseCompanySymbol()
+        return nasdaqSymbols + nyseSymbols
     }
 }
